@@ -1,0 +1,16 @@
+heroku create datacollectornoan
+heroku addons:create heroku-postgresql:hobby-dev --app datacollectornoan
+heroku config --app datacollectornoan
+
+heroku git:remote --app datacollectornoan
+git push heroku master
+
+# Create table at heroku db:
+heroku run python
+>>> from DataCollectorApp import db
+>>> db.create_all()
+>>> exit()
+
+# Connect to heroku db and check if there's table created:
+heroku pg:psql --app datacollectornoan
+datacollectornoan::DATABASE=> select * from data;
